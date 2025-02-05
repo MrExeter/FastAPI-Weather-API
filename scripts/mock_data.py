@@ -22,7 +22,7 @@ from database.database import SessionLocal, engine
 # Generate Mock Teams
 ########################################################################################################################
 def generate_mock_teams(db: Session):
-    """Generates mock teams."""
+
     team_names = ["Paper Shufflers",
                   "Stapler Squad",
                   "Gossip Trackers",
@@ -60,7 +60,7 @@ def generate_mock_teams(db: Session):
 # Generate Mock Users
 ########################################################################################################################
 def generate_mock_users(db: Session):
-    """Generates mock users and assigns them to teams."""
+
     teams = db.query(Team).all()
 
     if not teams:
@@ -104,7 +104,7 @@ def generate_mock_locations(db: Session):
 # Generate Random Weather Data
 ########################################################################################################################
 def generate_weather_data(db: Session):
-    """Generates mock weather data for locations."""
+
     locations = db.query(Location).all()
 
     if not locations:

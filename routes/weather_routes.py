@@ -21,7 +21,6 @@ router = APIRouter(
 ########################################################################################################################
 @router.get("/{location_id}", summary="Get Current Weather")
 def get_weather(location_id: int, db: Session = Depends(get_db), api_key=Depends(get_api_key)):
-    """Fetch current weather data for a location, requires a valid API key."""
     weather = db.query(Weather).filter(Weather.location_id == location_id).first()
 
     if not weather:
@@ -39,7 +38,6 @@ def get_weather(location_id: int, db: Session = Depends(get_db), api_key=Depends
 ########################################################################################################################
 @router.get("/{location_id}/hourly", summary="Get Hourly Weather Forecast")
 def get_hourly_forecast(location_id: int, db: Session = Depends(get_db), api_key=Depends(get_api_key)):
-    """Fetch hourly forecast for the next 24 hours for a location."""
     hourly_forecast = db.query(WeatherForecastHourly).filter(WeatherForecastHourly.weather_id == location_id).all()
 
     if not hourly_forecast:
@@ -59,7 +57,6 @@ def get_hourly_forecast(location_id: int, db: Session = Depends(get_db), api_key
 ########################################################################################################################
 @router.get("/{location_id}/daily", summary="Get Daily Weather Forecast")
 def get_daily_forecast(location_id: int, db: Session = Depends(get_db), api_key=Depends(get_api_key)):
-    """Fetch daily forecast for the next 10 days for a location."""
     daily_forecast = db.query(WeatherForecastDaily).filter(WeatherForecastDaily.weather_id == location_id).all()
 
     if not daily_forecast:
@@ -74,19 +71,3 @@ def get_daily_forecast(location_id: int, db: Session = Depends(get_db), api_key=
         }
         for day in daily_forecast
     ]
-#
-# ########################################################################################################################
-# # get the active weather alerts for a location
-# ########################################################################################################################
-# @router.get("/alerts/{location_id}", summary="Get Active Weather Alerts")
-# def get_weather_alerts(location_id: int, db: Session = Depends(get_db), api_key=Depends(get_api_key)):
-#     """Fetch active weather alerts for a location."""
-#     alerts = db.query(Alerts).filter(Alerts.team_id == location_id).all()
-#
-#     if not alerts:
-#         return {"message": "No active weather alerts"}
-#
-#     return [
-#         {"alert_name": alert.alert_name, "alert_description": alert.alert_description}
-#         for alert in alerts
-#     ]
